@@ -5,16 +5,18 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     public int enemyDirection;
+    public int speed = 1;
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(0, Time.deltaTime * enemyDirection, 0);
+        transform.Translate(0, Time.deltaTime * enemyDirection * speed, 0);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Bullet")
         {
+            Destroy(collision.gameObject);
             Destroy(gameObject);
         }
         

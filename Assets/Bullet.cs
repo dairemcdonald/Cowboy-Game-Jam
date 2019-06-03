@@ -6,10 +6,11 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private int dir;
+    public int speed;
 
     void Update()
     {
-        transform.Translate(0, Time.deltaTime * dir, 0);
+        transform.Translate(0, Time.deltaTime * dir * speed, 0);
     }
 
     public void Direction(int d)

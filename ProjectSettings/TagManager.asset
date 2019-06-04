@@ -43,6 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Camera1
+    uniqueID: 2957877643
+    locked: 0
   - name: 'Background '
     uniqueID: 4070569435
     locked: 0
@@ -54,4 +57,7 @@ TagManager:
     locked: 0
   - name: Enemies
     uniqueID: 530778027
+    locked: 0
+  - name: Camera2
+    uniqueID: 1132717749
     locked: 0

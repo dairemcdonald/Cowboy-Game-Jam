@@ -9,8 +9,10 @@ public class PlayerManager : MonoBehaviour
 
         if (collision.tag == "Enemy")
         {
-            FindObjectOfType<PlayerHealth>().carriageDown();
-            Destroy(gameObject);
+            //FindObjectOfType<PlayerHealth>().carriageDown();
+            //Destroy(gameObject);
+            Destroy(collision.gameObject);
+            FindObjectOfType<PlayerHealth>().enemyDown();
         }
 
     }

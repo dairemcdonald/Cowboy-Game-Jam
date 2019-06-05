@@ -17,7 +17,7 @@ public class EnemyMovement : MonoBehaviour
         if (collision.tag == "Bullet")
         {
             Destroy(collision.gameObject);
-            FindObjectOfType<PlayerHealth>().enemyDown();
+            FindObjectOfType<LevelManager>().enemyDown();
             Destroy(gameObject);
         }
 

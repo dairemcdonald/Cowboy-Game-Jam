@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
     private int hp = 2;
     [SerializeField] int waveLimit = 0;
@@ -14,6 +15,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] float startGap;
     private float timestamp;
     [SerializeField] bool startWaveFinished = false;
+    EnemySpawner[] Spawns;
 
 
     public GameObject gameOverText;
@@ -65,8 +67,17 @@ public class PlayerHealth : MonoBehaviour
             _gameoverText.transform.GetComponent<Text>().text = "You win Partner!";
             _gameoverText.GetComponent<RectTransform>().SetParent(Canvas.GetComponent<RectTransform>(), false);
             isGameOver = true;
+           if (SceneManager.GetActiveScene().buildIndex != 3)
+            { Invoke("LoadNextLevel", 2f); }
+                
         }
            
+    }
+
+    void LoadNextLevel()
+    {
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     IEnumerator startSpawn()
@@ -82,19 +93,22 @@ public class PlayerHealth : MonoBehaviour
     void newSpawn()
     {
         
-        var Spawns = FindObjectsOfType<EnemySpawner>();
+        Spawns = FindObjectsOfType<EnemySpawner>();
         System.Random random = new System.Random();
         int randomNumber = random.Next(0, Spawns.Length);
-        var containsEnemy = Spawns[randomNumber].GetComponentInChildren<EnemyMovement>();
+        string spawnNames = "";
+        EnemyMovement containsEnemy = null ;
+        try {containsEnemy = Spawns[randomNumber].GetComponentInChildren<EnemyMovement>(); }
+        catch {
+            Debug.Log(Spawns[randomNumber]);
+            Debug.Log(randomNumber);
+        }
         if(containsEnemy == null)
         {
             Spawns[randomNumber].spawnStarter();
             enemyAmount++;
         }
-        else
-        {
-            newSpawn();
-        }
+        
     }
 
 }

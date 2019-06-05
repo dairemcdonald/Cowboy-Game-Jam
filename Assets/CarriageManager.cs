@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class CarriageManager : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
             //FindObjectOfType<PlayerHealth>().carriageDown();
             //Destroy(gameObject);
             Destroy(collision.gameObject);
-            FindObjectOfType<PlayerHealth>().enemyDown();
+            FindObjectOfType<LevelManager>().enemyDown();
         }
 
     }

@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
             {
             Debug.Log("Extra Object: " + GetComponentsInChildren<EnemyMovement>()[1].gameObject.name);
             Destroy(GetComponentsInChildren<EnemyMovement>()[1].gameObject);
-                FindObjectOfType<PlayerHealth>().enemyAmount--;
+                FindObjectOfType<LevelManager>().enemyAmount--;
             
         }
     }

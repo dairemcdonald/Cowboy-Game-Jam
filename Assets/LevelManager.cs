@@ -6,20 +6,17 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
-    private int hp = 2;
+    public int hp = 2;
     [SerializeField] int waveLimit = 0;
     [SerializeField] int startLimit = 4;
     public int enemyAmount = 0;
     [SerializeField] int waveAmount= 4;
-    [SerializeField] float timeGap;
-    [SerializeField] float startGap;
+    [SerializeField] float timeGap = 2f;
+    [SerializeField] float startGap = 2f;
     private float timestamp;
     [SerializeField] bool startWaveFinished = false;
     EnemySpawner[] Spawns;
 
-
-    public GameObject gameOverText;
-    private GameObject _gameoverText;
 
     public Canvas Canvas;
     private bool isGameOver = false;
@@ -28,7 +25,8 @@ public class LevelManager : MonoBehaviour
     {
        
             StartCoroutine("startSpawn");
-     
+            FindObjectOfType<MusicPlayer>().dialogueTracker = SceneManager.GetActiveScene().buildIndex;
+
     }
 
     public void carriageDown()
@@ -36,16 +34,20 @@ public class LevelManager : MonoBehaviour
         hp--;
         if (hp <= 0 && !isGameOver)
         {
-            _gameoverText = Instantiate(gameOverText, transform.position, Quaternion.identity);
-            _gameoverText.GetComponent<RectTransform>().SetParent(Canvas.GetComponent<RectTransform>(), false);
+            FindObjectOfType<MusicPlayer>().win = false;
             isGameOver = true;
+            LoadNextLevel();
 
         }
     }
 
     private void Update()
     {
-       
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
+
         if (Time.time >= timestamp)
         {
             waveLimit++;
@@ -63,21 +65,16 @@ public class LevelManager : MonoBehaviour
         waveAmount--;
         if (waveAmount <= 0)
         {
-            _gameoverText = Instantiate(gameOverText, transform.position, Quaternion.identity);
-            _gameoverText.transform.GetComponent<Text>().text = "You win Partner!";
-            _gameoverText.GetComponent<RectTransform>().SetParent(Canvas.GetComponent<RectTransform>(), false);
             isGameOver = true;
-           if (SceneManager.GetActiveScene().buildIndex != 3)
-            { Invoke("LoadNextLevel", 2f); }
-                
+            FindObjectOfType<MusicPlayer>().win = true;
+            Invoke("LoadNextLevel", 2f);
         }
            
     }
 
     void LoadNextLevel()
     {
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(4);
     }
 
     IEnumerator startSpawn()
@@ -92,23 +89,39 @@ public class LevelManager : MonoBehaviour
 
     void newSpawn()
     {
-        
-        Spawns = FindObjectsOfType<EnemySpawner>();
-        System.Random random = new System.Random();
-        int randomNumber = random.Next(0, Spawns.Length);
-        string spawnNames = "";
-        EnemyMovement containsEnemy = null ;
-        try {containsEnemy = Spawns[randomNumber].GetComponentInChildren<EnemyMovement>(); }
-        catch {
-            Debug.Log(Spawns[randomNumber]);
-            Debug.Log(randomNumber);
-        }
-        if(containsEnemy == null)
+        if (transform.childCount > 0)
         {
-            Spawns[randomNumber].spawnStarter();
-            enemyAmount++;
+
+            Spawns = FindObjectsOfType<EnemySpawner>();
+            System.Random random = new System.Random();
+            int randomNumber = random.Next(0, Spawns.Length);
+            EnemyMovement containsEnemy = null;
+            try { containsEnemy = Spawns[randomNumber].GetComponentInChildren<EnemyMovement>(); }
+            catch
+            {
+                Debug.Log("Enemy Spawn Checker Exception");
+            }
+            if (containsEnemy == null && Spawns[randomNumber] != null)
+            {
+                Spawns[randomNumber].spawnStarter();
+                enemyAmount++;
+            }
         }
         
+    }
+
+    void LevelQuit()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    private void Pause()
+    {
+        if (Time.timeScale == 1)
+        { Time.timeScale = 0; }
+        else
+        { Time.timeScale = 1; }
+
     }
 
 }

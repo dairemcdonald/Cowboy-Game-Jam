@@ -5,6 +5,9 @@ using UnityEngine;
 public class MusicPlayer : MonoBehaviour
 {
     private AudioSource _audioSource;
+    public int dialogueTracker;
+    public bool win = false;
+
     private void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
@@ -21,4 +24,5 @@ public class MusicPlayer : MonoBehaviour
     {
         _audioSource.Stop();
     }
+
 }

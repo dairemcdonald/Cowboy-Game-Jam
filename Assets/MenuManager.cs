@@ -8,8 +8,15 @@ public class MenuManager : MonoBehaviour
     public TextMeshProUGUI textmesh;
     public GameObject but1, but2;
     public float wordDelay;
-    
-    public void LoadFirstLevel()
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Skip();
+        }
+    }
+        public void LoadFirstLevel()
     {
         but1.SetActive(false);
         but2.SetActive(false);
@@ -22,11 +29,14 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
+    void Skip()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+    }
+
     IEnumerator Dialogue()
     {
-        textmesh.SetText("Well howdy there, partner!");
-        yield return new WaitForSeconds(wordDelay);
-        textmesh.SetText("You must be our newest recruit");
+        textmesh.SetText("Well howdy there, partner! You must be our newest recruit");
         yield return new WaitForSeconds(wordDelay);
         textmesh.SetText("Okay, now see your job here is we have this train going 'cross country");
         yield return new WaitForSeconds(wordDelay);
@@ -40,7 +50,7 @@ public class MenuManager : MonoBehaviour
         yield return new WaitForSeconds(wordDelay);
         textmesh.SetText("You'll notice those letters match up with the layout of your telegraph machine");
         yield return new WaitForSeconds(wordDelay);
-        textmesh.SetText("So keep hollaring those letters and keeping the train in one piece");
+        textmesh.SetText("So keep hollaring those letters and keeping the train a-going");
         yield return new WaitForSeconds(wordDelay);
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }

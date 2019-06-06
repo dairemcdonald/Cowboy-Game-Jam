@@ -5,10 +5,6 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] float spawnDelay = 5f;
-    [SerializeField] float startDelay = 5f;
-    [SerializeField] int enemyNum = 4;
-
-
     public EnemyMovement prefab;
 
     private void Update()
@@ -34,5 +30,6 @@ public class EnemySpawner : MonoBehaviour
     {
         var tempInt = Instantiate(prefab, transform.position, Quaternion.identity);
         tempInt.transform.parent = this.transform;
+        //Debug.Log("Spawn: " + tempInt.GetInstanceID() + "Time : "+ Time.time);
     }
 }

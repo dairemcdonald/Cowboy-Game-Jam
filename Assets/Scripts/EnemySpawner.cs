@@ -26,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
         Invoke("Spawn", spawnDelay);
     }
 
-    private void Spawn()
+    public void Spawn()
     {
         var tempInt = Instantiate(prefab, transform.position, Quaternion.identity);
         tempInt.transform.parent = this.transform;

@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-       
+            QSpawn();  
             StartCoroutine("startSpawn");
             FindObjectOfType<MusicPlayer>().dialogueTracker = SceneManager.GetActiveScene().buildIndex;
 
@@ -105,10 +105,23 @@ public class LevelManager : MonoBehaviour
             {
                 Spawns[randomNumber].spawnStarter();
                 enemyAmount++;
+                
             }
         }
         
     }
+
+    void QSpawn()
+    {
+        if (transform.childCount > 0)
+        {
+                FindObjectOfType<EnemySpawner>().Spawn();
+                enemyAmount++;
+            Debug.Log("Spawn: " + Time.time);
+        }
+     }
+
+    
 
     void LevelQuit()
     {

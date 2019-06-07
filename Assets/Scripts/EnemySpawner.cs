@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] float spawnDelay = 5f;
+    [SerializeField] int spawnDelay = 3;
     public EnemyMovement prefab;
 
+    private void Start()
+    {
+        prefab.GetComponent<EnemyMovement>().speed = 4.5f;
+    }
     private void Update()
     {
         
@@ -22,14 +26,19 @@ public class EnemySpawner : MonoBehaviour
     public void spawnStarter()
     {
         System.Random random = new System.Random();
-        spawnDelay = random.Next(0, 10);
-        Invoke("Spawn", spawnDelay);
+        float randSpawn = random.Next(0, spawnDelay);
+        Invoke("Spawn", randSpawn);
     }
 
     public void Spawn()
     {
         var tempInt = Instantiate(prefab, transform.position, Quaternion.identity);
         tempInt.transform.parent = this.transform;
-        //Debug.Log("Spawn: " + tempInt.GetInstanceID() + "Time : "+ Time.time);
+        //Debug.Log("Spawn: " + tempInt.GetComponentInParent<EnemySpawner>().gameObject.name + " Time : "+ Time.time);
+    }
+
+    public void changeEnemySpeed()
+    {
+        prefab.GetComponent<EnemyMovement>().speed += 0.1f; 
     }
 }

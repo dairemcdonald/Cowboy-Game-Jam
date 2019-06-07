@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public KeyCode key = KeyCode.None;
     public int bulletDirection;
-    const float firerate = 0.75f;
+    const float firerate = 1f;
     private float timestamp;
 
     // Update is called once per frame

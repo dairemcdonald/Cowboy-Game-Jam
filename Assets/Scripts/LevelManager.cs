@@ -12,7 +12,9 @@ public class LevelManager : MonoBehaviour
     public int enemyAmount = 0;
     [SerializeField] int waveAmount= 4;
     [SerializeField] float timeGap = 2f;
-    [SerializeField] float startGap = 2f;
+    [SerializeField] float waveGap = 2f;
+    [SerializeField] float waveMax = 5f;
+    [SerializeField] float spawnGap = 2f;
     private float timestamp;
     [SerializeField] bool startWaveFinished = false;
     EnemySpawner[] Spawns;
@@ -23,9 +25,11 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-            QSpawn();  
-            StartCoroutine("startSpawn");
-            FindObjectOfType<MusicPlayer>().dialogueTracker = SceneManager.GetActiveScene().buildIndex;
+        int roundLimit = 2;
+         int atTime = 1;
+        spawnGap = 3f;
+        StartCoroutine(startSpawn(roundLimit, atTime));
+        
 
     }
 
@@ -53,10 +57,11 @@ public class LevelManager : MonoBehaviour
             waveLimit++;
             timestamp = Time.time + timeGap;
         }
-        if (enemyAmount < waveLimit && enemyAmount < waveAmount && startWaveFinished)
+        /*if (enemyAmount < waveLimit && enemyAmount < waveAmount && startWaveFinished)
         {
             newSpawn();
         }
+        */
     }
 
     public void enemyDown()
@@ -77,14 +82,30 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(4);
     }
 
-    IEnumerator startSpawn()
+    IEnumerator startSpawn(int roundLimit, int atTime)
     {
-        for (int i = 0; i < startLimit; i++)
+        for (int i = 0; i < roundLimit; i++)
         {
-            newSpawn();
-            yield return new WaitForSeconds(startGap);
+            for (int j = 0; j < atTime; j++)
+            {
+
+                wave2(atTime);
+                yield return new WaitForSeconds(spawnGap);
+            }
         }
-        startWaveFinished = true;
+        yield return new WaitForSeconds(waveGap);
+
+        if (atTime <= 6)
+        {
+            Debug.Log("Recursion");
+            for (int k = 0; k < Spawns.Length; k++)
+            {
+                Spawns[k].changeEnemySpeed();
+            }
+
+            spawnGap = spawnGap - 0.5f;
+            StartCoroutine(startSpawn(roundLimit, atTime + 1));
+        }
     }
 
     void newSpawn()
@@ -117,12 +138,43 @@ public class LevelManager : MonoBehaviour
         {
                 FindObjectOfType<EnemySpawner>().Spawn();
                 enemyAmount++;
-            Debug.Log("Spawn: " + Time.time);
         }
      }
 
-    
+    void wave2(int atTime)
+    {
+        if (transform.childCount > 0)
+        {
+            Spawns = FindObjectsOfType<EnemySpawner>();
+            System.Random random = new System.Random();
+            int randomNumber = random.Next(0, Spawns.Length);
+            EnemyMovement[] containsEnemy = null;
+            try { containsEnemy = Spawns[randomNumber].GetComponentsInChildren<EnemyMovement>(); }
+            catch
+            {
+                Debug.Log("Enemy Spawn Checker Exception");
+            }
+            if (containsEnemy.Length <= 2 && Spawns[randomNumber] != null)
+            {
+                Spawns[randomNumber].Spawn();
+                enemyAmount++;
+            }
+            if (containsEnemy.Length > 0 && Spawns[randomNumber] != null)
+            {
+                StartCoroutine(spawnInvoke(randomNumber));
+                
 
+            }
+        }
+    }
+
+
+    IEnumerator spawnInvoke(int randomNumber)
+    {
+        yield return new WaitForSeconds(1);
+        Spawns[randomNumber].Spawn();
+        enemyAmount++;
+    }
     void LevelQuit()
     {
         SceneManager.LoadScene(0);

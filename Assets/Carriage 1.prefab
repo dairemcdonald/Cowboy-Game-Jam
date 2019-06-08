@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb9ebed8dd8f5be4bbf7e857dd98a6bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blastPrefab: {fileID: 0}
 --- !u!1 &2719474821687195396
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,6 +778,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb9ebed8dd8f5be4bbf7e857dd98a6bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blastPrefab: {fileID: 1641622336755728087, guid: fe012e2b56ac8794eb93f109a5a84507,
+    type: 3}
 --- !u!95 &6482825238021410734
 Animator:
   serializedVersion: 3

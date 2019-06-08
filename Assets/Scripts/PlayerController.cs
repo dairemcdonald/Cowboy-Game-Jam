@@ -9,12 +9,12 @@ public class PlayerController : MonoBehaviour
     public int bulletDirection;
     const float firerate = 1f;
     private float timestamp;
-   
+    Animator m_Animator;
 
     void Start()
     {
-        //Get the Animator attached to the GameObject you are intending to animate.
-     
+        m_Animator = gameObject.GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -24,7 +24,8 @@ public class PlayerController : MonoBehaviour
         {
             CreateBullet();
             timestamp = Time.time + firerate;
-           
+            m_Animator.SetTrigger("Shoot");
+
         }
        
     }

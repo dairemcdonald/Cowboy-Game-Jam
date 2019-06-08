@@ -8,12 +8,9 @@ public class LevelManager : MonoBehaviour
 {
     public int hp = 2;
     public int enemyAmount = 0;
-    [SerializeField] int waveAmount= 4;
-    [SerializeField] float timeGap = 2f;
     [SerializeField] float waveGap = 2f;
     [SerializeField] float spawnGap = 2f;
     private float timestamp;
-    [SerializeField] bool startWaveFinished = false;
     EnemySpawner[] Spawns;
 
     public GameObject PausePanel;

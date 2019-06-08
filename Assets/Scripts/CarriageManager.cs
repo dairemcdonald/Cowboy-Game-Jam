@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CarriageManager : MonoBehaviour
 {
+    public GameObject blastPrefab;
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
@@ -12,6 +13,7 @@ public class CarriageManager : MonoBehaviour
             FindObjectOfType<LevelManager>().carriageDown();
             Destroy(collision.gameObject);
             FindObjectOfType<LevelManager>().enemyDown();
+            Instantiate(blastPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
 

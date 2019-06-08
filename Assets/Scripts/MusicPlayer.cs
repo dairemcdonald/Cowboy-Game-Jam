@@ -19,16 +19,14 @@ public class MusicPlayer : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            if (_audioSource.isPlaying)
-            { StopMusic(); }
-            else { PlayMusic(); }
-        }
 
+    public void Mute()
+    {
+        if (_audioSource.isPlaying)
+        { StopMusic(); }
+        else { PlayMusic(); }
     }
+
     public void PlayMusic()
     {
         _audioSource.Play();

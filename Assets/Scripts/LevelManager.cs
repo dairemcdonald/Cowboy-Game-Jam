@@ -16,6 +16,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] bool startWaveFinished = false;
     EnemySpawner[] Spawns;
 
+    public GameObject PausePanel;
+    private GameObject _pausePanel;
+
 
     public Canvas Canvas;
     private bool isGameOver = false;
@@ -64,13 +67,9 @@ public class LevelManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            LevelQuit();
-        }
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
             Pause();
         }
+        
 
     }
 
@@ -149,18 +148,31 @@ public class LevelManager : MonoBehaviour
 
     
 
-    void LevelQuit()
+    void QuitLevel()
     {
         SceneManager.LoadScene(0);
     }
 
-    private void Pause()
+    void ResumeLevel()
     {
-        if (Time.timeScale == 1)
-        { Time.timeScale = 0; }
-        else
-        { Time.timeScale = 1; }
-
+        Destroy(_pausePanel);
+        Time.timeScale = 1;
     }
 
+    void MuteLevel()
+    {
+        FindObjectOfType<MusicPlayer>().Mute();
+    }
+
+    private void Pause()
+    { 
+       Time.timeScale = 0; 
+        _pausePanel = Instantiate(PausePanel);
+        _pausePanel.transform.Find("ResumeButton").GetComponent<Button>().onClick.AddListener(ResumeLevel);
+        _pausePanel.transform.Find("MuteButton").GetComponent<Button>().onClick.AddListener(MuteLevel);
+        _pausePanel.transform.Find("QuitButton").GetComponent<Button>().onClick.AddListener(QuitLevel);
+        _pausePanel.GetComponent<RectTransform>().SetParent(Canvas.GetComponent<RectTransform>(), false);
+    }
 }
+
+

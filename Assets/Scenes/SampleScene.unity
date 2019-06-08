@@ -16128,16 +16128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d283eec3f4e9234eb88fc40ebffdf98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveLimit: 0
-  startLimit: 4
-  enemyAmount: 0
-  waveAmount: 100
-  timeGap: 2
-  startGap: 2
-  startWaveFinished: 0
-  gameOverText: {fileID: 7574319829444138640, guid: 3a530ee6b4269a14a874c0a1cb838d1c,
-    type: 3}
-  Canvas: {fileID: 911723954}
 --- !u!4 &1317261529
 Transform:
   m_ObjectHideFlags: 0

@@ -1,7 +1,13 @@
 fileFormatVersion: 2
-guid: a3c3b349a06098e43a8e27033ec1e2a4
+guid: 366ff93a996513649a10a66ad5b73e69
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -7087259321468330946
+    second: Cowboy- Gun Down-Sheet_0
+  - first:
+      213: -4903917756696614786
+    second: Cowboy- Gun Down-Sheet_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -40,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -82,11 +88,53 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Cowboy- Gun Down-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 13
+        width: 36
+        height: 91
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45c1edc0df1097b43a0b8cbad1f1e418
+      internalID: -7087259321468330946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cowboy- Gun Down-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 9
+        width: 36
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cd5c524a75b94840ac753954e784e85
+      internalID: -4903917756696614786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: e2c951dda9988284f86a29f55aea616b
+    spriteID: 85b2b719a9f6b784c9adc4b6d22be064
     internalID: 0
     vertices: []
     indices: 

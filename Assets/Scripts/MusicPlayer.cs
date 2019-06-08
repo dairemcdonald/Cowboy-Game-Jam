@@ -12,11 +12,25 @@ public class MusicPlayer : MonoBehaviour
     {
         DontDestroyOnLoad(transform.gameObject);
         _audioSource = GetComponent<AudioSource>();
+
+        if (FindObjectsOfType<MusicPlayer>().Length > 1)
+        {
+            Destroy(gameObject);
+        }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (_audioSource.isPlaying)
+            { StopMusic(); }
+            else { PlayMusic(); }
+        }
+
+    }
     public void PlayMusic()
     {
-        if (_audioSource.isPlaying) return;
         _audioSource.Play();
     }
 

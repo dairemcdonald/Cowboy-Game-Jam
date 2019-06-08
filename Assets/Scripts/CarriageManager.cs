@@ -10,7 +10,6 @@ public class CarriageManager : MonoBehaviour
         if (collision.tag == "Enemy")
         {
             FindObjectOfType<LevelManager>().carriageDown();
-            Debug.Log("Hit: " + collision.GetComponentInParent<EnemySpawner>().gameObject.name + " Time : " + Time.time);
             Destroy(collision.gameObject);
             FindObjectOfType<LevelManager>().enemyDown();
             Destroy(gameObject);

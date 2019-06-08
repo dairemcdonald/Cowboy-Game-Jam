@@ -16,7 +16,7 @@ public class InterludeManager : MonoBehaviour
         previousLevel = FindObjectOfType<MusicPlayer>().dialogueTracker;
         win = FindObjectOfType<MusicPlayer>().win;
         string dialogue = "";
-        if (previousLevel != 3 && win)
+        if (previousLevel != 3 && win == true)
         { dialogue = "Level " + (previousLevel + 1) ; }
         else if (previousLevel == 3 && win)
         { dialogue = "Well done buckaroo! The train has made it safe and sound thanks to you"; }
@@ -30,20 +30,22 @@ public class InterludeManager : MonoBehaviour
     {
         textmesh.SetText(dialogueParams);
         if (previousLevel != 3 && win)
-            { yield return new WaitForSeconds(wordDelay); }
-        if (previousLevel == 3 && win)
-        { yield return new WaitForSeconds(endWordDelay); }
-
-        if (previousLevel != 3 && win)
-            {
+         {
+            yield return new WaitForSeconds(wordDelay);
             SceneManager.LoadScene(previousLevel + 1);
-            }
-        else if (previousLevel == 3 && win)
+        }
+        if (previousLevel == 3 && win)
         {
+            Debug.Log("Win Interlude");
+            yield return new WaitForSeconds(endWordDelay);
             SceneManager.LoadScene(0);
         }
+
         else
-        { SceneManager.LoadScene(previousLevel); }
+        {
+            Debug.Log("End Interlude");
+            yield return new WaitForSeconds(wordDelay);
+            SceneManager.LoadScene(previousLevel); }
 
     }
 

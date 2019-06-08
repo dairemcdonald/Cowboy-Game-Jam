@@ -6,10 +6,15 @@ public class EnemyMovement : MonoBehaviour
 {
     public int enemyDirection;
     public float speed = 1;
+    public bool delayed = false;
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(0, Time.deltaTime * enemyDirection * speed, 0);
+        float localspeed = speed;
+        if (delayed)
+        { localspeed = 0f;
+        }
+        transform.Translate(0, Time.deltaTime * enemyDirection * localspeed, 0);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -20,9 +25,7 @@ public class EnemyMovement : MonoBehaviour
             FindObjectOfType<LevelManager>().enemyDown();
             Destroy(gameObject);
         }
-
-        
     }
-
+    
 
 }

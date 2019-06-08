@@ -16,10 +16,8 @@ public class EnemySpawner : MonoBehaviour
         
             if (GetComponentsInChildren<EnemyMovement>().Length > 1)
             {
-            Debug.Log("Extra Object: " + GetComponentsInChildren<EnemyMovement>()[1].gameObject.name);
             Destroy(GetComponentsInChildren<EnemyMovement>()[1].gameObject);
-                FindObjectOfType<LevelManager>().enemyAmount--;
-            
+            FindObjectOfType<LevelManager>().enemyAmount--;
         }
     }
 
@@ -37,8 +35,27 @@ public class EnemySpawner : MonoBehaviour
         //Debug.Log("Spawn: " + tempInt.GetComponentInParent<EnemySpawner>().gameObject.name + " Time : "+ Time.time);
     }
 
-    public void changeEnemySpeed()
+    public void delayedSpawn(float enemyGap)
     {
-        prefab.GetComponent<EnemyMovement>().speed += 0.1f; 
+        StartCoroutine(resumeSpawn(enemyGap));
+    }
+
+    IEnumerator resumeSpawn(float enemyGap)
+    {
+        var tempObj = Instantiate(prefab, transform.position, Quaternion.identity);
+        tempObj.transform.parent = this.transform;
+        tempObj.delayed = true;
+        yield return new WaitForSeconds(enemyGap);
+        tempObj.delayed = false;
+    }
+
+    public void changeEnemySpeed(float change)
+    {
+        prefab.GetComponent<EnemyMovement>().speed += change; 
+    }
+
+    public float getEnemySpeed()
+    {
+        return prefab.GetComponent<EnemyMovement>().speed;
     }
 }

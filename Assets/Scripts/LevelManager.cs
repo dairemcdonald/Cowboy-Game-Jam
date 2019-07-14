@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,13 +17,21 @@ public class LevelManager : MonoBehaviour
     public GameObject PausePanel;
     private GameObject _pausePanel;
 
-
+    public Dictionary<string, PlayerController> validKeys;
     public Canvas Canvas;
     private bool isGameOver = false;
+    private void Awake()
+    {
+        if (FindObjectOfType<MusicPlayer>() == null)
+        {
+            Instantiate(Resources.Load(path: "MusicPlayer") as GameObject);
+        }
+        validKeys= new Dictionary<string, PlayerController>();
+    }
 
     private void Start()
     {
-        FindObjectOfType<MusicPlayer>().dialogueTracker = SceneManager.GetActiveScene().buildIndex;
+        MusicPlayer.dialogueTracker = SceneManager.GetActiveScene().buildIndex;
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             int roundLimit = 2;
@@ -53,7 +62,7 @@ public class LevelManager : MonoBehaviour
         hp--;
         if (hp <= 0 && !isGameOver)
         {
-            FindObjectOfType<MusicPlayer>().win = false;
+            MusicPlayer.win = false;
             isGameOver = true;
             LoadNextLevel();
 
@@ -66,7 +75,25 @@ public class LevelManager : MonoBehaviour
         {
             Pause();
         }
-        
+
+        else if (Input.GetKeyDown(KeyCode.P))
+        {
+            Time.timeScale = 0;
+        }
+        else if (Input.GetKeyDown(KeyCode.B))
+        {
+            Time.timeScale = 1;
+        }
+
+        else if (Input.anyKeyDown)
+        {
+            PlayerController player;
+            validKeys.TryGetValue(Input.inputString.ToUpper(), out player);
+            if (player != null)
+            {
+                player.ShootInput();
+            }
+        }
 
     }
 
@@ -79,6 +106,17 @@ public class LevelManager : MonoBehaviour
     void LoadNextLevel()
     {
         SceneManager.LoadScene(4);
+    }
+
+
+    public void AddUnit(string key, PlayerController unit)
+    {
+        validKeys.Add(key, unit);
+    }
+
+    public void RemoveUnit(string key)
+    {
+        validKeys.Remove((key));
     }
 
     IEnumerator spawnLevelOne(int roundLimit, int atTime, int waveMax)
@@ -108,7 +146,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             isGameOver = true;
-            FindObjectOfType<MusicPlayer>().win = true;
+            MusicPlayer.win = true;
             Invoke("LoadNextLevel", 2f);
         }
     }
@@ -158,7 +196,7 @@ public class LevelManager : MonoBehaviour
 
     void MuteLevel()
     {
-        FindObjectOfType<MusicPlayer>().Mute();
+        MusicPlayer.Mute();
     }
 
     private void Pause()

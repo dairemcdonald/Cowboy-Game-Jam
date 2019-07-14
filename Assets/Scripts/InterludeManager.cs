@@ -13,8 +13,8 @@ public class InterludeManager : MonoBehaviour
 
     private void Start()
     {
-        previousLevel = FindObjectOfType<MusicPlayer>().dialogueTracker;
-        win = FindObjectOfType<MusicPlayer>().win;
+        previousLevel = MusicPlayer.dialogueTracker;
+        win = MusicPlayer.win;
         string dialogue = "";
         if (previousLevel != 3 && win == true)
         { dialogue = "Level " + (previousLevel + 1) ; }
@@ -34,7 +34,7 @@ public class InterludeManager : MonoBehaviour
             yield return new WaitForSeconds(wordDelay);
             SceneManager.LoadScene(previousLevel + 1);
         }
-        if (previousLevel == 3 && win)
+        else if (previousLevel == 3 && win)
         {
             Debug.Log("Win Interlude");
             yield return new WaitForSeconds(endWordDelay);

@@ -7,20 +7,27 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public KeyCode key = KeyCode.None;
     public int bulletDirection;
+    public string keyString;
+
     const float firerate = 1f;
     private float timestamp;
+
+    public LevelManager levelManager;
     Animator m_Animator;
 
     void Start()
     {
         m_Animator = gameObject.GetComponent<Animator>();
+        levelManager = FindObjectOfType<LevelManager>();
+        keyString = key.ToString();
+        levelManager.AddUnit(keyString, this);
 
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    public void ShootInput()
     {
-        if (Input.GetKeyDown(key) && Time.time >= timestamp)
+        if (Time.time >= timestamp)
         {
             CreateBullet();
             timestamp = Time.time + firerate;
@@ -37,5 +44,9 @@ public class PlayerController : MonoBehaviour
         bullet.Direction(bulletDirection);
     }
 
+    void OnDestroy()
+    {
+        levelManager.RemoveUnit(key.ToString());
+    }
 
 }
